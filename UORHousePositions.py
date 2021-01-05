@@ -46,16 +46,22 @@ for entry in houseEntries:
     count = count + 1
     
     entry = entry.split(':')
-    houseType = entry[0][1:] # [1:] to remove initial +
-    housePosition = entry[1][1:].split(' ') # [1:] to remove initial space
+    houseName = entry[0][1:] # [1:] to remove initial +
+    houseData = entry[1][1:].split(' ') # [1:] to remove initial space
 
+    housePosition = houseData[0:2] # position is x,y only, leave out mapID
+    mapID = 0 #houseData[2]
+    
     # update house position with offset
-    housePosition[0] = str(int(housePosition[0]) + houseOffsets[houseType][0]) # x coord
-    housePosition[1] = str(int(housePosition[1]) + houseOffsets[houseType][1]) # y coord
-    housePosition[2] = '0'                                                     # z coord
+    housePosition[0] = str(int(housePosition[0]) + houseOffsets[houseName][0]) # x coord
+    housePosition[1] = str(int(housePosition[1]) + houseOffsets[houseName][1]) # y coord
 
-    # pos, type, type, color, unknown
-    file.write("{},{},{},{},{}\n".format(','.join(housePosition), houseType, houseType, 'yellow', 7))
+    icon = houseName # both have same name
+    color = 'yellow'
+    zoomIndex = 7
+    
+    # x, y, map id, name, icon, color, zoom index
+    file.write("{},{},{},{},{}\n".format(','.join(housePosition), mapID, houseName, icon, color, zoomIndex))
 print(" ok")
 
 file.close()
