@@ -1,8 +1,13 @@
-import os
+import os, shutil
 import urllib.request
 
 url = "http://www.uorenaissance.com/map/house.txt"
-housesFile = "C:\\UORenaissance\\ClassicUO\Data\\Client\\UORHouses.csv"
+dataDir = os.path.join("C:\\", "UORenaissance", "ClassicUO", "Data", "Client")
+housesFile = os.path.join(dataDir, "UORHouses.csv")
+
+if not os.path.exists(dataDir):
+    print("error: " + dataDir + " does not exist!")
+    exit(1)
 
 houseOffsets = {
 	"castle": 		[0, -5],
@@ -54,4 +59,25 @@ for entry in houseEntries:
 print(" ok")
 
 file.close()
-print("Generated " + str(count) + " house entries.\noutput file: " + housesFile)
+print("Generated " + str(count) + " house entries.\noutput file: '" + housesFile + "'")
+
+print("Checking map icons...", end="")
+mapIconsDir = os.path.join(os.getcwd(), "MapIcons")
+if os.path.exists(mapIconsDir):
+    mapIcons = os.listdir(mapIconsDir)
+    dest = os.path.join(dataDir, "MapIcons")
+    flag = False
+    for icon in mapIcons:
+        if not os.path.exists(os.path.join(dest, icon)):
+            if not flag:
+                flag = True
+                print(" missing")
+            shutil.copy2(os.path.join(mapIconsDir, icon), dest)
+            print("\tcopied file '" + icon + "'")
+    if not flag:
+        print(" ok")
+else:
+    print(" failed")
+    print("warning: '" + mapIconsDir + "' does not exist!")
+
+input("\nPress ENTER to quit.")
