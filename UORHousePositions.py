@@ -1,3 +1,6 @@
+# For ClassicUO world map house markers on UO Renaissance
+# based on Chadarius's fork of Quick's uorhousepositions
+# https://github.com/Chadarius/uorhousepositions/tree/worldmap
 import os, shutil
 import urllib.request
 
@@ -28,7 +31,7 @@ houseOffsets = {
 }
 
 housesText = None
-print("Downloading houses.txt...", end="")
+print("Downloading house.txt...", end="")
 with urllib.request.urlopen(url) as f:
     housesText = f.read().decode('utf-8')
 print(" ok")
@@ -63,7 +66,7 @@ for entry in houseEntries:
     zoomIndex = 7
     
     # x, y, map id, name, icon, color, zoom index
-    # zoomIndex is the level of zoom you need to show a map marker icon
+    # zoomIndex is the level of zoom you need to show a map marker icon (default=3)
     # so 0 would show the house markers even if you zoomed all the way out on the map
     file.write("{},{},{},{},{},{}\n".format(','.join(housePosition), mapID, houseName, icon, color, zoomIndex))
 print(" ok")
