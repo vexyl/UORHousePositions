@@ -50,6 +50,8 @@ for entry in houseEntries:
     houseData = entry[1][1:].split(' ') # [1:] to remove initial space
 
     housePosition = houseData[0:2] # position is x,y only, leave out mapID
+    
+    # mapID should be 0, reading the id from house.txt makes the icon/name not show up at all
     mapID = 0 #houseData[2]
     
     # update house position with offset
@@ -61,7 +63,9 @@ for entry in houseEntries:
     zoomIndex = 7
     
     # x, y, map id, name, icon, color, zoom index
-    file.write("{},{},{},{},{}\n".format(','.join(housePosition), mapID, houseName, icon, color, zoomIndex))
+    # zoomIndex is the level of zoom you need to show a map marker icon
+    # so 0 would show the house markers even if you zoomed all the way out on the map
+    file.write("{},{},{},{},{},{}\n".format(','.join(housePosition), mapID, houseName, icon, color, zoomIndex))
 print(" ok")
 
 file.close()
