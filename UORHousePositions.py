@@ -5,8 +5,7 @@
 import os, shutil
 import urllib.request
 
-
-iconsSwitch = False # change to True to use old isometric icons
+iconsSwitch = False # change to True to use 3D icons
 localMapIcons = "BikrMapIcons"
 
 if iconsSwitch:
