@@ -5,14 +5,15 @@
 import os, shutil
 import urllib.request
 
+uoDir = r"C:\UORenaissance" # change this to your UO:R directory
 iconsSwitch = False # change to True to use 3D icons
-localMapIcons = "BikrMapIcons"
 
+localMapIcons = "BikrMapIcons"
 if iconsSwitch:
     localMapIcons = "MapIconsOld"
 
 url = "http://www.uorenaissance.com/map/house.txt"
-dataDir = os.path.join("C:\\", "UORenaissance", "ClassicUO", "Data", "Client")
+dataDir = os.path.join(uoDir, "ClassicUO", "Data", "Client")
 housesFile = os.path.join(dataDir, "UORHouses.csv")
 
 if not os.path.exists(dataDir):
