@@ -1,8 +1,16 @@
 # For ClassicUO world map house markers on UO Renaissance
 # based on Chadarius's fork of Quick's uorhousepositions
 # https://github.com/Chadarius/uorhousepositions/tree/worldmap
+# icons in BikrMapIcons made by Bikr
 import os, shutil
 import urllib.request
+
+
+iconsSwitch = False # change to True to use old isometric icons
+localMapIcons = "BikrMapIcons"
+
+if iconsSwitch:
+    localMapIcons = "MapIconsOld"
 
 url = "http://www.uorenaissance.com/map/house.txt"
 dataDir = os.path.join("C:\\", "UORenaissance", "ClassicUO", "Data", "Client")
@@ -65,7 +73,7 @@ for entry in houseEntries:
     color = 'yellow'
     zoomIndex = 7
     
-    # x, y, map id, name, icon, color, zoom index
+    # x, y, map id, name, icon, color, zoom index (optional)
     # zoomIndex is the level of zoom you need to show a map marker icon (default=3)
     # so 0 would show the house markers even if you zoomed all the way out on the map
     file.write("{},{},{},{},{},{}\n".format(','.join(housePosition), mapID, houseName, icon, color, zoomIndex))
@@ -75,7 +83,7 @@ file.close()
 print("Generated " + str(count) + " house entries.\noutput file: '" + housesFile + "'")
 
 print("Checking map icons...", end="")
-mapIconsDir = os.path.join(os.getcwd(), "MapIcons")
+mapIconsDir = os.path.join(os.getcwd(), localMapIcons)
 if os.path.exists(mapIconsDir):
     mapIcons = os.listdir(mapIconsDir)
     dest = os.path.join(dataDir, "MapIcons")
