@@ -6,10 +6,10 @@ import os, shutil
 import urllib.request
 
 uoDir = r"C:\UORenaissance" # change this to your UO:R directory
-iconsSwitch = False # change to True to use 3D icons
+alternativeIcons = False # change to True to use 3D icons
 
 localMapIcons = "BikrMapIcons"
-if iconsSwitch:
+if alternativeIcons:
     localMapIcons = "MapIconsOld"
 
 url = "http://www.uorenaissance.com/map/house.txt"
@@ -20,24 +20,6 @@ if not os.path.exists(dataDir):
     print("error: " + dataDir + " does not exist!")
     exit(1)
 
-houseOffsets = {
-	"castle": 		[0, -5],
-	"fortress": 		[0, -5],
-	"keep"    : 		[0, -5],
-	"large house": 		[0, -5],
-	"log cabin": 		[0, -5],
-	"marble patio": 	[0, -5],
-	"marble shop": 		[0, -5],
-	"patio house": 		[0, -5],
-	"sandstone patio":	[0, -6],
-	"small house": 		[0, -5],
-	"small tower": 		[0, -5],
-	"stone shop": 		[0, -5],
-	"tower": 		[0, -5],
-	"two story house": 	[0, -5],
-	"villa": 		[0, -5],
-}
-
 housesText = None
 print("Downloading house.txt...", end="")
 with urllib.request.urlopen(url) as f:
@@ -45,8 +27,11 @@ with urllib.request.urlopen(url) as f:
 print(" ok")
 
 file = open(housesFile, 'w')
-
 houseEntries = housesText.replace('\r', '').split('\n')
+
+# House coords seem to be center-x, center-y + 5
+# So we want to draw the icon at x, y - 5
+yOffset = -5
 
 print("Processing house entries...", end="")
 count = 0
@@ -66,8 +51,8 @@ for entry in houseEntries:
     mapID = 0 #houseData[2]
     
     # update house position with offset
-    housePosition[0] = str(int(housePosition[0]) + houseOffsets[houseName][0]) # x coord
-    housePosition[1] = str(int(housePosition[1]) + houseOffsets[houseName][1]) # y coord
+    housePosition[0] = str(int(housePosition[0])) # x coord
+    housePosition[1] = str(int(housePosition[1]) + yOffset) # y coord
 
     icon = houseName # both have same name
     color = 'yellow'
